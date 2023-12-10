@@ -172,10 +172,11 @@ class MyClass {
 
         $nama_category = $_POST['nama_category'];
         $category = $_POST['category'];
+        $stock = $_POST['stock'];
 
       
     
-        $sql = "INSERT INTO category (nama_category , category) VALUES ('$nama_category', '$category')";
+        $sql = "INSERT INTO category (nama_category , category, stock ) VALUES ('$nama_category', '$category','$stock')";
     
         $result = $this->koneksi->query($sql);
         if ($result) {
@@ -223,10 +224,12 @@ class MyClass {
 
         $nama_category = $_POST['nama_category'];
         $category = $_POST['category'];
+        $stock = $_POST['stock'];
+
         $id = $_POST['id'];
 
         
-        $sql = "UPDATE category SET nama_category = '$nama_category', category = '$category' WHERE id_category = $id";
+        $sql = "UPDATE category SET nama_category = '$nama_category', category = '$category', stock=$stock  WHERE id_category = $id";
 
         $result = $this->koneksi->query($sql);
         if ($result) {

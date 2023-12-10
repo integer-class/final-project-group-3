@@ -74,6 +74,8 @@
                 <input type="text" id="addInputName" name="nama_category" required>
                 <label for="addCategory">Category:</label>
                 <input type="text" id="addCategory" name="category" required>
+                <label for="addCategory">Stock:</label>
+                <input type="text" id="addCategory" name="stock" required>
                 <div style="margin-top: 20px;">
                     <button class="btn btn-primary" type="submit">Save</button>
                     <button class="btn btn-danger" type="button" onclick="closeModal('addCategoryModal')">Close</button>
@@ -91,6 +93,8 @@
                 <input type="text" id="editInputName" name="nama_category">
                 <label for="editCategory">Category:</label>
                 <input type="text" id="editCategory" name="category">
+                <label for="editCategory">Stock:</label>
+                <input type="text" id="stock" name="stock">
                 <input type="hidden" id="id" name="id" name="id_category" required>
                 <div style="margin-top: 20px;">
                     <button class="btn btn-primary" type="submit">Save</button>
@@ -147,6 +151,7 @@
                     document.getElementById('editInputName').value = response.nama_category;
                     document.getElementById('editCategory').value = response.category;
                     document.getElementById('id').value = response.id_category;
+                    document.getElementById('stock').value = response.stock;
                 },
                 error: function (error) {
                     console.error('Error fetching category data:', error);

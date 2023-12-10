@@ -93,7 +93,6 @@
                 <tr>
                     <th>ID</th>
                     <th>Item Code</th>
-                    <th>Name</th>
                     <th>Category</th>
                     <th>Status</th>
                     <th>Actions</th>
@@ -109,7 +108,7 @@
             <form method="post" action="model.php?halaman=tambah_item">
             <div style="margin-bottom: 30px">
                 <div style="margin-bottom: -1px;">
-                    <label for="tanggal">Name Item</label>
+                    <label for="name">Name Item</label>
                 </div>
                 <select style="width: 350px" name="id_barang" class="select-box form-control" id="mySelect"></select>
 
@@ -118,7 +117,7 @@
                 <input disabled type="" id="id"  name="id_category">
                 
                 <label style="margin-top: 200px" for="addInputName">Item Code:</label>
-                <input type="text" id="addInputName" name="nama_category" required>
+                <input type="text" id="addInputName" name="item_code" required>
 
                 <div style="margin-top: 50px;">
                     <button class="btn btn-primary" type="submit">Save</button>
@@ -154,9 +153,6 @@
                     render: function(data, type, row, meta) {
                         return meta.row + 1;
                     }
-                },
-                {
-                    data: 'kode_barang'
                 },
                 {
                     data: 'nama_item'
