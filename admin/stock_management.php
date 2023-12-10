@@ -31,7 +31,7 @@
 
     .modal-content {
         background-color: #fefefe;
-        margin: 15% auto;
+        margin: 13% auto;
         padding: 20px;
         border: 1px solid #888;
         width: 20%;
@@ -106,18 +106,22 @@
         <div class="modal-content">
             <h2>Add Item</h2>
             <form method="post" action="model.php?halaman=tambah_item">
-            <div style="margin-bottom: 30px">
-                <div style="margin-bottom: -1px;">
-                    <label for="name">Name Item</label>
-                </div>
-                <select style="width: 350px" name="id_barang" class="select-box form-control" id="mySelect"></select>
+                <div style="margin-bottom: 30px">
+                    <div style="margin-bottom: -1px;">
+                        <label for="name">Name Item</label>
+                    </div>
+                    <select style="width: 100%" name="id_barang" class="select-box form-control" id="mySelect"></select>
 
                 </div>
                 <label for="addInputName">Category Item:</label>
-                <input disabled type="" id="id"  name="id_category">
-                
+                <input disabled type="" id="id" name="id_category">
+
                 <label style="margin-top: 200px" for="addInputName">Item Code:</label>
                 <input type="text" id="addInputName" name="item_code" required>
+
+                <label style="margin-top: 200px" for="addInputName">Descripton:</label>
+                <textarea style="height: 100px" type="text" id="addInputName" name="description"></textarea>
+
 
                 <div style="margin-top: 50px;">
                     <button class="btn btn-primary" type="submit">Save</button>
@@ -126,6 +130,36 @@
             </form>
         </div>
     </div>
+
+    <div id="editCategoryModal" class="modal">
+        <div class="modal-content">
+            <h2>Add Item</h2>
+            <form method="post" action="model.php?halaman=tambah_item">
+                <div style="margin-bottom: 30px">
+                    <div style="margin-bottom: -1px;">
+                        <label for="name">Name Item</label>
+                    </div>
+                    <select style="width: 100%" name="id_barang" class="select-box form-control" id="mySelect"></select>
+
+                </div>
+                <label for="addInputName">Category Item:</label>
+                <input disabled type="" id="id" name="id_category">
+
+                <label style="margin-top: 200px" for="addInputName">Item Code:</label>
+                <input type="text" id="codeitem" name="item_code" required>
+
+                <label style="margin-top: 200px" for="addInputName">Descripton:</label>
+                <textarea style="height: 100px" type="text" id="addInputName" name="description"></textarea>
+
+                <div style="margin-top: 50px;">
+                    <button class="btn btn-primary" type="submit">Save</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+
 
     <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -170,14 +204,43 @@
                         return '<div class="actions">' +
                             '<a class="btn btn-danger btn-small material-icons" href="model.php?halaman=hapus_item&id=' +
                             itemId + '">delete</a>' +
-                            '<a class="btn btn-warning btn-small material-icons" style="margin-left : 10px" href="model.php?halaman=hapus_item&id=' +
-                            itemId + '">edit</a>' +
+                            '<button class="btn btn-warning btn-small material-icons" style="margin-left : 10px" onclick="openEditModal(' +
+                            itemId+')" >edit</button>' +
                             '</div>';
                     }
                 }
             ]
         });
     });
+
+    function openEditModal(itemid) {
+        console.log('Opening edit modal for category ID:', itemid);
+        $.ajax({
+            url: 'model.php?halaman=get_item_id&id=' + itemid,
+            method: 'GET',
+            success: function(response) {
+                document.getElementById('codeitem').value = response.nama_item;
+            },
+            error: function(error) {
+                console.error('Error fetching category data:', error);
+            }
+        });
+        openModal('editCategoryModal');
+    }
+
+    function openModal(modalId) {
+        var modal = document.getElementById(modalId);
+        modal.style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+        var modal = document.getElementById(modalId);
+        modal.style.display = 'none';
+    }
+
+
+
+
 
     document.addEventListener('DOMContentLoaded', function() {
         var openModalBtn = document.getElementById('openModalBtn');
@@ -194,12 +257,13 @@
     });
 
     // jQuery script for the select box with search option
-    $(document).ready(function () {
+    $(document).ready(function() {
         // Fetch JSON data from the provided URL
-        $.getJSON("model.php?halaman=category", function (data) {
+        $.getJSON("model.php?halaman=category", function(data) {
             // Iterate through the JSON data and append options to the select box
-            $.each(data, function (index, item) {
-                $("#mySelect").append("<option value='" + item.id_category + "'>" + item.nama_category + "</option>");
+            $.each(data, function(index, item) {
+                $("#mySelect").append("<option value='" + item.id_category + "'>" + item
+                    .nama_category + "</option>");
             });
 
             // Initialize select2
@@ -211,13 +275,14 @@
             });
 
             // Handle change event of the select box
-            $("#mySelect").change(function () {
+            $("#mySelect").change(function() {
                 // Set the value of the hidden input field (#id) based on the selected item
                 var selectedCategoryId = $(this).val();
-                
+
                 // Find the corresponding category in the data array
-                var selectedCategory = data.find(category => category.id_category == selectedCategoryId);
-                
+                var selectedCategory = data.find(category => category.id_category ==
+                    selectedCategoryId);
+
                 // Check if the category is found
                 if (selectedCategory) {
                     $("#id").val(selectedCategory.category);
@@ -225,6 +290,13 @@
             });
         });
     });
+
+
+   
+
+
+
+   
     </script>
 
 </body>

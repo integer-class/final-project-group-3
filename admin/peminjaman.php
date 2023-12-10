@@ -14,7 +14,8 @@
     <style>
     .card {
         margin-top: 200px;
-        margin: 200px
+        margin: 200px;
+        width: fit-content;
     }
 
     .select2-selection__rendered {

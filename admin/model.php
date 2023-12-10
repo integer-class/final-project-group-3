@@ -42,6 +42,12 @@ class MyClass {
         elseif ($_GET['halaman'] == 'edit_category') {
             $this->edit_category();
         }
+        elseif ($_GET['halaman'] == 'tambah_item') {
+            $this->tambah_item();
+        }
+        elseif ($_GET['halaman'] == 'get_item_id' && isset($_GET['id'])) {
+            $this->get_item_id($_GET['id']);
+        }
     }
 
     private function getItems() {
@@ -263,6 +269,19 @@ class MyClass {
     
     }
 
+    private function get_item_id($id) {
+    
+        $sql = "SELECT * FROM items WHERE id_item = $id";
+        $result = $this->koneksi->query($sql);
+        $row = $result->fetch_assoc();
+
+        header('Content-Type: application/json');
+        echo json_encode($row);
+    
+    }
+
+    
+
     
 
     private function selesaiPeminjaman($id) {
@@ -287,6 +306,40 @@ class MyClass {
 
         echo "<script>alert('Peminjaman berhasil dikembalikan');</script>";
         echo "<script>location='index.php?halaman=item_logs';</script>";
+    }
+
+
+    private function tambah_item() {
+
+        $id_barang = $_POST['id_barang'];
+        $item_code = $_POST['item_code'];
+        $description = $_POST['description'];
+
+      
+    
+        $sql = "INSERT INTO items (nama_item , id_category, deskripsi_item ) VALUES ('$item_code', '$id_barang','$description')";
+
+        $result = $this->koneksi->query($sql);
+        
+    
+        if ($result) {
+            $currentTime = date("Y-m-d H:i:s");
+           
+            $history = "INSERT INTO history (waktu, Activity) VALUES ('$currentTime', 'Add Item $item_code')";
+            $result_history = $this->koneksi->query($history);
+
+            if ($result_history) {
+                echo "<script>alert('Success Add Item');</script>";
+                echo "<script>location='index.php?halaman=stock_management';</script>";
+            } else {
+                echo "Error updating stock: " . mysqli_error($koneksi);
+            }
+    
+            
+        } else {
+            echo "Error inserting peminjaman record: " . mysqli_error($koneksi);
+        }
+    
     }
 }
 
