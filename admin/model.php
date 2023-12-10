@@ -39,6 +39,9 @@ class MyClass {
         elseif ($_GET['halaman'] == 'get_category' && isset($_GET['id'])) {
             $this->get_category($_GET['id']);
         }
+        elseif ($_GET['halaman'] == 'edit_category') {
+            $this->edit_category();
+        }
     }
 
     private function getItems() {
@@ -141,10 +144,6 @@ class MyClass {
     
         $result = $this->koneksi->query($sql);
         if ($result) {
-           
-            
-            
-
             $currentTime = date("Y-m-d H:i:s");
             $history = "INSERT INTO history (waktu, Activity) VALUES ('$currentTime', '$nama $id_peminjam Meminjam $nama_item')";
             $result_history = $this->koneksi->query($history);
@@ -214,6 +213,35 @@ class MyClass {
             }
     }
 
+    private function edit_category () {
+
+        $nama_category = $_POST['nama_category'];
+        $category = $_POST['category'];
+        $id = $_POST['id'];
+        
+        $sql = "UPDATE category SET nama_category = '$nama_category', category = '$category' WHERE id_category = $id";
+
+        $result = $this->koneksi->query($sql);
+        if ($result) {
+            $currentTime = date("Y-m-d H:i:s");
+           
+            $history = "INSERT INTO history (waktu, Activity) VALUES ('$currentTime', 'Update Kategori $nama_category')";
+            $result_history = $this->koneksi->query($history);
+
+            if ($result_history) {
+                echo "<script>alert('Success Update Category');</script>";
+                echo "<script>location='index.php?halaman=category';</script>";
+            } else {
+                echo "Error updating stock: " . mysqli_error($koneksi);
+            }
+    
+            
+        } else {
+            echo "Error inserting peminjaman record: " . mysqli_error($koneksi);
+        }
+    
+    }
+
     private function get_category($id) {
     
         $sql = "SELECT * FROM category WHERE id_category = $id";
@@ -224,6 +252,8 @@ class MyClass {
         echo json_encode($row);
     
     }
+
+    
 
     private function selesaiPeminjaman($id) {
         $sql = "SELECT * FROM peminjaman JOIN items ON peminjaman.id_item = items.id_item JOIN category ON items.id_category = category.id_category WHERE id_peminjaman=$id ";
