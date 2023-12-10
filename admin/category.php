@@ -64,10 +64,20 @@
     </div>
 
     <!-- Add Category Modal -->
-    <div id="addCategoryModal" class="modal">
+     <!-- Add Category Modal -->
+     <div id="addCategoryModal" class="modal">
         <div class="modal-content">
             <h2>Add Category</h2>
-            <!-- Your add category form content here -->
+            <form method="post" action="model.php?halaman=tambah_category">
+                <label for="addInputName">Name:</label>
+                <input type="text" id="addInputName" name="nama_category" required>
+                <label for="addCategory">Category:</label>
+                <input type="text" id="addCategory" name="category" required>
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-danger" type="button" onclick="closeModal('addCategoryModal')">Close</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -80,7 +90,7 @@
                 <input type="text" id="editInputName" name="nama_category">
                 <label for="editCategory">Category:</label>
                 <input type="text" id="editCategory" name="category">
-                <input type="text" id="id" name="id" name="id_category" required>
+                <input type="hidden" id="id" name="id" name="id_category" required>
                 <div style="margin-top: 20px;">
                     <button class="btn btn-primary" type="submit">Save</button>
                     <button class="btn btn-danger" type="button" onclick="closeModal('editCategoryModal')">Close</button>

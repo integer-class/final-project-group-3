@@ -145,7 +145,7 @@ class MyClass {
         $result = $this->koneksi->query($sql);
         if ($result) {
             $currentTime = date("Y-m-d H:i:s");
-            $history = "INSERT INTO history (waktu, Activity) VALUES ('$currentTime', '$nama $id_peminjam Meminjam $nama_item')";
+            $history = "INSERT INTO history (waktu, Activity) VALUES ('$currentTime', '$nama $id_peminjam Loans $nama_item')";
             $result_history = $this->koneksi->query($history);
     
             if ($result_update) {
@@ -175,7 +175,7 @@ class MyClass {
         if ($result) {
             $currentTime = date("Y-m-d H:i:s");
            
-            $history = "INSERT INTO history (waktu, Activity) VALUES ('$currentTime', 'Menambahkan Kategori $nama_category')";
+            $history = "INSERT INTO history (waktu, Activity) VALUES ('$currentTime', 'Add Category $nama_category')";
             $result_history = $this->koneksi->query($history);
 
             if ($result_history) {
@@ -200,7 +200,7 @@ class MyClass {
             $row = $result->fetch_assoc();
             $nama_category = $row['nama_category'];
         
-            $history = "INSERT INTO history (waktu, Activity) VALUES ('$currentTime', 'Menghapus Category $nama_category')";
+            $history = "INSERT INTO history (waktu, Activity) VALUES ('$currentTime', 'Delete Category $nama_category')";
             $result_history = $this->koneksi->query($history);
 
             if ($result_history) {
@@ -218,6 +218,7 @@ class MyClass {
         $nama_category = $_POST['nama_category'];
         $category = $_POST['category'];
         $id = $_POST['id'];
+
         
         $sql = "UPDATE category SET nama_category = '$nama_category', category = '$category' WHERE id_category = $id";
 
@@ -225,7 +226,7 @@ class MyClass {
         if ($result) {
             $currentTime = date("Y-m-d H:i:s");
            
-            $history = "INSERT INTO history (waktu, Activity) VALUES ('$currentTime', 'Update Kategori $nama_category')";
+            $history = "INSERT INTO history (waktu, Activity) VALUES ('$currentTime', 'Update Category  $nama_category')";
             $result_history = $this->koneksi->query($history);
 
             if ($result_history) {
@@ -271,7 +272,7 @@ class MyClass {
         $result_update = $this->koneksi->query($update_query);
 
         $currentTime = date("Y-m-d H:i:s");
-        $history = "INSERT INTO history (waktu, Activity) VALUES ('$currentTime', '$nama Mengembalikan $nama_item')";
+        $history = "INSERT INTO history (waktu, Activity) VALUES ('$currentTime', '$nama Return $nama_item')";
         $result_history = $this->koneksi->query($history);
 
         echo "<script>alert('Peminjaman berhasil dikembalikan');</script>";

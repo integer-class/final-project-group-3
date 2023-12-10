@@ -73,7 +73,7 @@ if (!isset($_SESSION['username'])) {
         <div class="<?php echo isset($_GET['halaman']) && ($_GET['halaman'] == 'peminjaman' || $_GET['halaman'] == 'tambah_peminjam') ? 'active' : ''; ?>">
             <a href="index.php?halaman=peminjaman"><span class="material-icons">
             real_estate_agent
-                </span> Peminjaman</a>
+                </span> Loaning</a>
         </div>
     </div>
 
