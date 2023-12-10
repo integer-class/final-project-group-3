@@ -107,16 +107,17 @@
         <div class="modal-content">
             <h2>Add Item</h2>
             <form method="post" action="model.php?halaman=tambah_item">
-                <label for="addInputName">Item Name:</label>
-                <input type="text" id="addInputName" name="nama_category" required>
-                <div style="margin-bottom: 30px">
+            <div style="margin-bottom: 30px">
                 <div style="margin-bottom: -1px;">
-                    <label for="tanggal">Category</label>
+                    <label for="tanggal">Name Item</label>
                 </div>
                 <select style="width: 350px" name="id_barang" class="select-box form-control" id="mySelect"></select>
 
                 </div>
-                <label style="margin-top: 200px" for="addInputName">Item Name:</label>
+                <label for="addInputName">Category Item:</label>
+                <input disabled type="" id="id"  name="id_category">
+                
+                <label style="margin-top: 200px" for="addInputName">Item Code:</label>
                 <input type="text" id="addInputName" name="nama_category" required>
 
                 <div style="margin-top: 50px;">
@@ -197,14 +198,12 @@
     });
 
     // jQuery script for the select box with search option
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Fetch JSON data from the provided URL
-        $.getJSON("model.php?halaman=category", function(data) {
+        $.getJSON("model.php?halaman=category", function (data) {
             // Iterate through the JSON data and append options to the select box
-            $.each(data, function(index, item) {
-                $("#mySelect").append("<option value='" + item.id_category + "'>" + item
-                    .nama_category +
-                    "</option>");
+            $.each(data, function (index, item) {
+                $("#mySelect").append("<option value='" + item.id_category + "'>" + item.nama_category + "</option>");
             });
 
             // Initialize select2
@@ -213,6 +212,20 @@
                 placeholder: "Select an item",
                 allowClear: true,
                 width: "resolve",
+            });
+
+            // Handle change event of the select box
+            $("#mySelect").change(function () {
+                // Set the value of the hidden input field (#id) based on the selected item
+                var selectedCategoryId = $(this).val();
+                
+                // Find the corresponding category in the data array
+                var selectedCategory = data.find(category => category.id_category == selectedCategoryId);
+                
+                // Check if the category is found
+                if (selectedCategory) {
+                    $("#id").val(selectedCategory.category);
+                }
             });
         });
     });

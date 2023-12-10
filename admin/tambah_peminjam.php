@@ -91,6 +91,7 @@
                 <div class="col-md-5">
                     <label for="tanggal">Tanggal Peminjaman:</label><br>
                     <input style="width: 350px;" type="date" id="tanggal_pinjam" name="tanggal_pinjam" class="form-control" required>
+                    
                 </div>
                 <div style="margin-left: 30px" class="col-md-5">
                     <label for="tanggal">Tanggal Peminjaman:</label><br>
@@ -109,14 +110,12 @@
     </div>
 
     <script>
-    // jQuery script for the select box with search option
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Fetch JSON data from the provided URL
-        $.getJSON("model.php?halaman=items", function(data) {
+        $.getJSON("model.php?halaman=items", function (data) {
             // Iterate through the JSON data and append options to the select box
-            $.each(data, function(index, item) {
-                $("#mySelect").append("<option value='" + item.id_item + "'>" + item.nama_item +
-                    "</option>");
+            $.each(data, function (index, item) {
+                $("#mySelect").append("<option value='" + item.id_item + "'>" + item.nama_item + "</option>");
             });
 
             // Initialize select2
@@ -126,9 +125,24 @@
                 allowClear: true,
                 width: "resolve",
             });
+
+            // Handle change event of the select box
+            $("#mySelect").change(function () {
+                // Set the value of the hidden input field (#id) based on the selected item
+                var selectedItemId = $(this).val();
+                
+                // Find the corresponding item in the data array
+                var selectedItem = data.find(item => item.id_item == selectedItemId);
+                
+                // Check if the item is found
+                if (selectedItem) {
+                    $("#id").val(selectedItem.id_category);
+                }
+            });
         });
     });
-    </script>
+</script>
+
 
 </body>
 

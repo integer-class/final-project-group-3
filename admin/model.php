@@ -124,23 +124,29 @@ class MyClass {
         $tanggal_pinjam = $_POST['tanggal_pinjam'];
         $tanggal_kembali = $_POST['tanggal_kembali'];
         $status = "Active";
+        $id_category = $_POST['id_category'];
 
-        $update_query = "UPDATE items SET stock = stock - $jumlah WHERE id_item = $id_barang";
-            $result_update = $this->koneksi->query($update_query);
+        
 
-            $item = "SELECT * FROM items Where id_item= $id_barang";
-            $result_id = $this->koneksi->query($item);
-            $row = $result_id->fetch_assoc();
-            $nama_item = $row['nama_item'];
-            $stock = $row['stock'];
+          $category = "SELECT * FROM category WHERE id_category = $id_category";
+            $result_category = $this->koneksi->query($category);
+            $row = $result_category->fetch_assoc();
+            $nama_item = $row['nama_category'];
+
+
+
 
             if ($row['stock'] < 1 || $jumlah <= 0 || $jumlah > $row['stock']) {
                 echo "<script>alert('loan failed stock item kosong');</script>";
                 echo "<script>location='index.php?halaman=peminjaman';</script>";
+                echo $row['stock'];
             }
             else
             {
                 $sql = "INSERT INTO peminjaman (id_peminjam, nama_peminjam, id_item, jumlah_peminjaman, tanggal_pinjam, tanggal_kembali, status_peminjaman) VALUES ('$id_peminjam', '$nama', '$id_barang', '$jumlah', '$tanggal_pinjam', '$tanggal_kembali', '$status')";
+                $update_query = "UPDATE category SET stock = stock - $jumlah WHERE id_category = $id_category";
+                $result_update = $this->koneksi->query($update_query);
+
     
         $result = $this->koneksi->query($sql);
         if ($result) {
@@ -263,12 +269,13 @@ class MyClass {
         $nama = $row['nama_peminjam'];
         $nama_item = $row['nama_item'];
         $id_barang = $row['id_item'];
+        $id_category = $row['id_category'];
 
         $jumlah_peminjaman = $row['jumlah_peminjaman'];
         $update_query = "UPDATE peminjaman SET status_peminjaman = 'Returned'  WHERE id_peminjaman  = $id";
         $result = $this->koneksi->query($update_query);
 
-        $update_query = "UPDATE items SET stock = stock + $jumlah_peminjaman WHERE id_item = $id_barang";
+        $update_query = "UPDATE category SET stock = stock + $jumlah_peminjaman WHERE id_category = $id_category";
         $result_update = $this->koneksi->query($update_query);
 
         $currentTime = date("Y-m-d H:i:s");
@@ -276,7 +283,7 @@ class MyClass {
         $result_history = $this->koneksi->query($history);
 
         echo "<script>alert('Peminjaman berhasil dikembalikan');</script>";
-        echo "<script>location='index.php?halaman=peminjaman';</script>";
+        echo "<script>location='index.php?halaman=item_logs';</script>";
     }
 }
 

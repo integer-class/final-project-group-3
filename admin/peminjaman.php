@@ -66,6 +66,8 @@
                 <div class="col-md-6">
                     <label for="nama">Loaner Name</label>
                     <input type="text" id="nama" name="nama" class="form-control" required>
+                    <input type="hidden" id="id"  name="id_category">
+                    
                 </div>
 
             </div>
@@ -109,14 +111,12 @@
     </div>
 
     <script>
-    // jQuery script for the select box with search option
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Fetch JSON data from the provided URL
-        $.getJSON("model.php?halaman=items", function(data) {
+        $.getJSON("model.php?halaman=items", function (data) {
             // Iterate through the JSON data and append options to the select box
-            $.each(data, function(index, item) {
-                $("#mySelect").append("<option value='" + item.id_item + "'>" + item.nama_item +
-                    "</option>");
+            $.each(data, function (index, item) {
+                $("#mySelect").append("<option value='" + item.id_item + "'>" + item.nama_item + "</option>");
             });
 
             // Initialize select2
@@ -126,9 +126,24 @@
                 allowClear: true,
                 width: "resolve",
             });
+
+            // Handle change event of the select box
+            $("#mySelect").change(function () {
+                // Set the value of the hidden input field (#id) based on the selected item
+                var selectedItemId = $(this).val();
+                
+                // Find the corresponding item in the data array
+                var selectedItem = data.find(item => item.id_item == selectedItemId);
+                
+                // Check if the item is found
+                if (selectedItem) {
+                    $("#id").val(selectedItem.id_category);
+                }
+            });
         });
     });
-    </script>
+</script>
+
 
 </body>
 

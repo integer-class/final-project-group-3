@@ -18,8 +18,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Category</th>
-                    <th>Price</th>
-                    <th>Stock</th>
+             
                     <th>Description</th>
                     <th>Actions</th>
                 </tr>
@@ -46,12 +45,6 @@
                 },
                 {
                     data: 'category'
-                },
-                {
-                    data: 'harga_item'
-                },
-                {
-                    data: 'stock'
                 },
                 {
                     data: 'deskripsi_item'

@@ -56,6 +56,7 @@
                     <th>Name</th>
                     <th>Category</th>
                     <th>Item Types</th>
+                    <th>Stock</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -120,6 +121,7 @@
                     { data: 'nama_category' },
                     { data: 'category' },
                     { data: 'num_item' },
+                    { data: 'stock' },
                     {
                         data: null,
                         render: function (data, type, row) {
